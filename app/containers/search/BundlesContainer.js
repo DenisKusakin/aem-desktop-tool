@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Bundles from '../../components/search/BundlesSearchResult';
+import BundlesSearchResult from '../../components/search/BundlesSearchResult';
 import searchSelector from './../../selectors/search-selector';
 
 const mapStateToProps = (state, ownProps) => {
@@ -25,6 +25,6 @@ const mapStateToProps = (state, ownProps) => {
   return { chunks };
 };
 
-const BundlesContainer = connect(mapStateToProps)(Bundles);
+const BundlesContainer = connect(mapStateToProps)(BundlesSearchResult);
 
 export default BundlesContainer;

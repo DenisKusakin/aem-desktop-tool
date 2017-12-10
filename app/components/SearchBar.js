@@ -5,13 +5,27 @@ import Bundles from '../containers/search/BundlesContainer';
 import SearchBar from '../containers/search/SearchBarContainer';
 import BottomNavigation from './../containers/search/BottomNavigationContainer';
 
-const Search = ({id}) => (<div>
-  <Paper>
-    <SearchFilter id={id} />
-    <SearchBar id={id} />
-    <Bundles id={id} />
-  </Paper>
-  <BottomNavigation />
-</div>);
+const Search = ({ id }) => {
+  if (id === 'bundles') {
+    return (<div>
+      <Paper>
+        <SearchFilter id={id} />
+        <SearchBar id={id} searchType={'bundles'} />
+        <Bundles id={id} />
+      </Paper>
+      <BottomNavigation />
+    </div>);
+  } else if (id === 'components') {
+    return (<div>
+      <Paper>
+        <SearchFilter id={id} />
+        <SearchBar id={id} searchType={'components'} />
+        <Bundles id={id} />
+      </Paper>
+      <BottomNavigation />
+    </div>);
+  }
+  return null;
+};
 
 export default Search;

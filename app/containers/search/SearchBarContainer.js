@@ -20,7 +20,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onRequestSearch: (serverIds, q) => () => dispatch(runSearch(ownProps.id)({ serverIds, q })),
+  onRequestSearch: (serverIds, q) => () => dispatch(
+    runSearch(ownProps.id, ownProps.searchType)({ serverIds, q })),
   onChange: q => dispatch(changeQueryField(ownProps.id)(q))
 });
 

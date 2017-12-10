@@ -17,27 +17,10 @@ const INITIAL_STATE2 = {
       q: '',
       id: 'bundles',
       label: 'Bundles'
-    },
-    {
-      checkboxes: {},
-      result: {
-        chunks: []
-      },
-      q: '',
-      id: 'components',
-      label: 'Components'
     }
   ],
   current: 0
 };
-
-// const INITIAL_STATE = {
-//   checkboxes: {},
-//   result: {
-//     chunks: []
-//   },
-//   q: ''
-// };
 
 const itemReducer = (state, action) => {
   switch (action.type) {
@@ -90,7 +73,7 @@ const itemReducer = (state, action) => {
   }
 };
 
-const red = (state = INITIAL_STATE2, action) => {
+const rootReducer = (state = INITIAL_STATE2, action) => {
   if (action.type === CHANGE_BOTTOM_NAVIGATION){
     return {
       ...state,
@@ -116,4 +99,4 @@ const red = (state = INITIAL_STATE2, action) => {
   };
 };
 
-export default red;
+export default rootReducer;
