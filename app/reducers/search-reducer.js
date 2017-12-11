@@ -17,6 +17,15 @@ const INITIAL_STATE2 = {
       q: '',
       id: 'bundles',
       label: 'Bundles'
+    },
+    {
+      checkboxes: {},
+      result: {
+        chunks: []
+      },
+      q: '',
+      id: 'components',
+      label: 'Components'
     }
   ],
   current: 0

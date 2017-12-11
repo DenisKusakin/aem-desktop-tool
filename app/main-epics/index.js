@@ -2,7 +2,7 @@ import Rx from 'rxjs/Rx';
 import servers from './servers-epic';
 import logger from './logger-epic';
 import fetchServerInfo from './server-info-epic';
-import bundles from './bundles-search';
+import bundles from './search-epic';
 import bundlesActions from './bundles-actions';
 
 const rootEpic = event$ => Rx.Observable.merge(

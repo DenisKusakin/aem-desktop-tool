@@ -2,7 +2,7 @@ import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 
-const bundlesIcon = <FontIcon className="material-icons">bundles</FontIcon>;
+const bundlesIcon = label => <FontIcon className="material-icons">{label}</FontIcon>;
 
 const BottomNav = ({ items, selectedIndex }) => {
   if (items.length > 0) {
@@ -11,7 +11,7 @@ const BottomNav = ({ items, selectedIndex }) => {
         items.map(x => (
           <BottomNavigationItem
             label={x.label}
-            icon={bundlesIcon}
+            icon={bundlesIcon(x.label)}
             key={x.id}
             onClick={x.handleClick}
           />)
@@ -21,6 +21,5 @@ const BottomNav = ({ items, selectedIndex }) => {
   }
   return null;
 };
-
 
 export default BottomNav;

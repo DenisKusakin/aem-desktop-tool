@@ -15,6 +15,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-const ActionButtonContainer = connect(mapStateToProps, mapDispatchToProps)(ActionButton);
+const BundleActionButtonContainer = connect(mapStateToProps, mapDispatchToProps)(ActionButton);
 
-export default ActionButtonContainer;
+export default BundleActionButtonContainer;

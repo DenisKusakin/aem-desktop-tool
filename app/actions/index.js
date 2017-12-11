@@ -1,5 +1,6 @@
 import all from './search-actions';
 import bundlesActions from './bundles-actions';
+import componentActions from './components-actions';
 
 const HOME_PAGE_MOUNT = 'HOME_PAGE_MOUNT';
 const HIDE_DRAWER = 'HIDE_DRAWER';
@@ -30,6 +31,7 @@ const ERROR = 'ERROR';
 module.exports = {
   ...all,
   ...bundlesActions,
+  ...componentActions,
   HIDE_DRAWER,
   SHOW_DRAWER,
   ADD_SERVER,

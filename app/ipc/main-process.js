@@ -23,6 +23,6 @@ const errorLogger = getLogger('Error: ', 'error.log');
 epic(getRendererEvents())
     .do(x => pushToRendererLogger.info(JSON.stringify(x, null, '\t')))
     .subscribe(pushToRenderer, error => {
-      errorLogger.error(JSON.stringify(error));
+      errorLogger.error(error);
       pushToRenderer(error.type ? error : { type: 'ERROR', error });
     });

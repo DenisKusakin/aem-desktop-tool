@@ -10,6 +10,7 @@ import newServerFormVisible from './new-server-form'
 import removeServer from './remove-server-reducer'
 import search from './search-reducer';
 import bundles from './bundles-reducer';
+import components from './components-reducer';
 
 const rootReducer = combineReducers({
   router,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   newServerFormVisible,
   removeServerDialog: removeServer,
   search,
-  bundles
+  bundles,
+  components
 });
 
 export default rootReducer;
