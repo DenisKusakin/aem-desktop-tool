@@ -56,7 +56,7 @@ const configureStore = (initialState) => {
 
   // Apply Middleware & Compose Enhancers
   enhancers.push(applyMiddleware(...middleware));
-  enhancers.push(localstorage);
+  //enhancers.push(localstorage);
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store

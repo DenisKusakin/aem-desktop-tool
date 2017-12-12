@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import ComponentsSearchResult from '../../components/search/ComponentsSearchResult';
 import searchSelector from './../../selectors/search-selector';
 
-const mapStateToProps = (state, ownProps) => {
-  const search = searchSelector(state, ownProps.id);
+const mapStateToProps = (state) => {
+  const search = searchSelector(state, 'componentsSearch');
   if (!search) {
     return { chunks: [] };
   }
@@ -19,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
       }
       return {
         ...x,
-        items: x.items.map(({ id }) => serverComponents.items.find(y => y.id === id))
+        items: x.items.map(({ id }) => serverComponents.items.find(y => y.id === id)).filter(x => x !== undefined && x !== null)
       };
     });
   return { chunks };

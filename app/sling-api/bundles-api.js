@@ -70,13 +70,31 @@ const bundleAction = endpoint => action => ({ host, login, password }) => bundle
 const stopBundle = bundleAction('/system/console/bundles')('stop');
 const startBundle = bundleAction('/system/console/bundles')('start');
 
+const componentsTransformer = y => ({ ...y, actionId: y.id === '' ? y.pid : y.id, id: y.pid, _id: y.id });
+
+const componentsList = arg => {
+  return bundlesList(COMPONENTS_ENDPOINT)(arg)
+          .map(x => ({
+            ...x,
+            data: {
+              data: x.data.data.map(componentsTransformer)
+            }
+          }))
+}
+
 const componentAction = actionType => arg => componentId => {
   return bundleAction('/system/console/components')(actionType)(arg)(componentId)
           .map(x => ({
-              time: x.time,
-              statusCode: x.statusCode,
-              data: JSON.parse(x.response.body)
-            }))
+            time: x.time,
+            statusCode: x.statusCode,
+            data: JSON.parse(x.response.body)
+          }))
+          .map(x => ({
+            ...x,
+            data: {
+              data: x.data.data.map(componentsTransformer)
+            }
+          }))
 };
 
 const startComponent = componentAction('enable');
@@ -86,7 +104,7 @@ export default {
   bundlesList: bundlesList(BUNDLES_LIST_ENDPOINT),
   startBundle,
   stopBundle,
-  componentsList: bundlesList(COMPONENTS_ENDPOINT),
+  componentsList,
   startComponent,
   stopComponent
 };

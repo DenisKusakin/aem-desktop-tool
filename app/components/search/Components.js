@@ -4,9 +4,9 @@ import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import ComponentActionButton from './../../containers/ComponentActionButtonContainer';
 
-const renderItem = serverId => ({ name, id, state, stateRaw, isActionPending }) => (
+const renderItem = serverId => ({ name, id, _id, state, stateRaw, isActionPending }) => (
   <TableRow key={name}>
-    <TableRowColumn style={{ width: '10%' }}>{id}</TableRowColumn>
+    <TableRowColumn style={{ width: '10%' }}>{_id}</TableRowColumn>
     <TableRowColumn style={{ width: '55%' }}>
       <div>
         <span style={{ fontSize: 12 }}>

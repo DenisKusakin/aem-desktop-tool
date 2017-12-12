@@ -13,13 +13,13 @@ export default (state = INITIAL_STATE, action) => {
       }
     };
   } else if (action.type === START_COMPONENT || action.type === STOP_COMPONENT) {
-    const { payload: { serverId, bundleId } } = action;
+    const { payload: { serverId, componentId } } = action;
     return {
       ...state,
       [serverId]: {
         time: state[serverId].time,
         items: state[serverId].items.map(x => {
-          if (x.id === bundleId) {
+          if (x.actionId === componentId) {
             return {
               ...x,
               isActionPending: true
@@ -32,13 +32,13 @@ export default (state = INITIAL_STATE, action) => {
       }
     };
   } else if (action.type === COMPONENT_ACTION_FULFILLED) {
-    const { payload: { serverId, bundleId } } = action;
+    const { payload: { serverId, componentId } } = action;
     return {
       ...state,
       [serverId]: {
         time: state[serverId].time,
         items: state[serverId].items.map(x => {
-          if (x.id === bundleId) {
+          if (x.actionId === componentId) {
             return {
               ...x,
               isActionPending: false

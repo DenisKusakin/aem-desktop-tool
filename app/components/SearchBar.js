@@ -1,31 +1,15 @@
 import React from 'react';
-import Paper from 'material-ui/Paper';
-import SearchFilter from '../containers/search/SearchFilterContainer';
-import Bundles from '../containers/search/BundlesContainer';
-import Components from '../containers/search/ComponentsContainer';
-import SearchBar from '../containers/search/SearchBarContainer';
+import BundlesSearch from './search/BundlesSearch';
+import ComponentsSearch from './search/ComponentsSearch';
 import BottomNavigation from './../containers/search/BottomNavigationContainer';
 
-const Search = ({ id }) => {
-  if (id === 'bundles') {
-    return (<div>
-      <Paper>
-        <SearchFilter id={id} />
-        <SearchBar id={id} searchType={'bundles'} />
-        <Bundles id={id} />
-      </Paper>
-      <BottomNavigation />
-    </div>);
-  } else if (id === 'components') {
-    return (<div>
-      <Paper>
-        <SearchFilter id={id} />
-        <SearchBar id={id} searchType={'components'} />
-        <Components id={id} />
-      </Paper>
-      <BottomNavigation />
-    </div>);
+const Search = ({ currentIndex }) => {
+  if(currentIndex === 0){
+    return [<BundlesSearch key={0} />, <BottomNavigation key={1} />];
+  } else if(currentIndex === 1){
+    return [<ComponentsSearch key={0} />, <BottomNavigation key={1} />];
   }
+
   return null;
 };
 

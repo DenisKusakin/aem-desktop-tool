@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import BundlesSearchResult from '../../components/search/BundlesSearchResult';
 import searchSelector from './../../selectors/search-selector';
 
-const mapStateToProps = (state, ownProps) => {
-  const search = searchSelector(state, ownProps.id);
+const mapStateToProps = (state) => {
+  const search = searchSelector(state, 'bundlesSearch');
   if (!search) {
     return { chunks: [] };
   }

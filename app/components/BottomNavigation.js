@@ -4,22 +4,16 @@ import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNaviga
 
 const bundlesIcon = label => <FontIcon className="material-icons">{label}</FontIcon>;
 
-const BottomNav = ({ items, selectedIndex }) => {
-  if (items.length > 0) {
-    return (<BottomNavigation style={{ bottom: 0 }} selectedIndex={selectedIndex}>
-      {
-        items.map(x => (
-          <BottomNavigationItem
-            label={x.label}
-            icon={bundlesIcon(x.label)}
-            key={x.id}
-            onClick={x.handleClick}
-          />)
-        )
-      }
-    </BottomNavigation>);
-  }
-  return null;
-};
+const BottomNav = ({ handleClick, selectedIndex }) => (
+  <BottomNavigation style={{ bottom: 0 }} selectedIndex={selectedIndex}>
+    <BottomNavigationItem
+      label={'Bundles'}
+      icon={bundlesIcon('Bundles')}
+      onClick={handleClick(0)}/>
+    <BottomNavigationItem
+      label={'Components'}
+      icon={bundlesIcon('Components')}
+      onClick={handleClick(1)}/>
+  </BottomNavigation>);
 
 export default BottomNav;

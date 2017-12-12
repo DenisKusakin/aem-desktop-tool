@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Search from '../../components/SearchBar';
 
 const mapStateToProps = state => ({
-  id: state.search.items[state.search.current].id
+  currentIndex: state.bottomNavigation.current
 });
 
 const SearchContainer = connect(mapStateToProps)(Search);

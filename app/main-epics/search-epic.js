@@ -30,14 +30,14 @@ const bundlesSearchEpic = event$ =>
           return componentsList({ host, login, password })
             .map(({ time, data }) => {
               const items = data.data;
-              return { id, items: items.map(x => ({ ...x, id: x.id === '' ? x.pid : x.id })), time, searchId, q, searchType };
+              return { id, items, time, searchId, q, searchType };
             })
         }
       }
     )
     .flatMap(({ id, time, items, searchId, q, searchType }) => {
       const bundlesFilter = x => x.symbolicName && x.symbolicName.toLowerCase().indexOf(q) > -1;
-      const componentsFilter = x => x.name && (x.name.toLowerCase().indexOf(q) > -1 || x.pid.toLowerCase().indexOf(q) > -1);
+      const componentsFilter = x => (x.name && x.name.toLowerCase().indexOf(q) > -1) || (x.pid && x.pid.toLowerCase().indexOf(q) > -1);
 
       const filteredItems = items.filter(searchType === 'bundles' ? bundlesFilter : componentsFilter).map(x => ({ id: x.id }));
       const updateAction = searchType === 'bundles' ? updateBundles({ serverId: id, items, time }) : updateComponents({ serverId: id, items, time })

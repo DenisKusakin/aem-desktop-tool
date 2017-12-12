@@ -9,13 +9,16 @@ const mapStateToProps = (state, ownProps) => {
   return {
     isActionPending: component.isActionPending,
     isDisabled,
-    isActive: !isDisabled
+    isActive: !isDisabled,
+    actionId: component.actionId
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const arg = { serverId: ownProps.serverId, componentId: ownProps.componentId };
-  const handleClick = isDisabled => () => dispatch(isDisabled ? startComponent(arg) : stopComponent(arg))
+  const handleClick = (actionId, isDisabled) => {
+    const arg = { serverId: ownProps.serverId, componentId: actionId };
+    return () => dispatch(isDisabled ? startComponent(arg) : stopComponent(arg))
+  }
   return {
     handleClick
   };
@@ -25,7 +28,7 @@ const mergeProps = (stateProps, dispatchProps) => {
   return {
     isActionPending: stateProps.isActionPending,
     isActive: stateProps.isActive,
-    handleClick: dispatchProps.handleClick(stateProps.isDisabled)
+    handleClick: dispatchProps.handleClick(stateProps.actionId, stateProps.isDisabled)
   }
 }
 

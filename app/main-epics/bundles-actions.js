@@ -1,6 +1,6 @@
 import Rx from 'rxjs/Rx';
 import { findServers } from './../db';
-import { stopBundle, startBundle, startComponent, stopComponent } from './../sling-api';
+import { bundlesList, stopBundle, startBundle, startComponent, stopComponent, componentsList } from './../sling-api';
 import {
   START_BUNDLE,
   STOP_BUNDLE,
@@ -8,6 +8,8 @@ import {
   START_COMPONENT,
   STOP_COMPONENT,
   UPDATE_COMPONENTS,
+  BUNDLE_ACTION_FULFILLED,
+  UPDATE_COMPONENTS_INTENT,
   updateBundlesIntent,
   bundleActionFulfilled,
   updateBundles,
@@ -30,6 +32,31 @@ const updateBundlesEpic = event$ =>
           return updateBundles({ serverId, items, time });
         })
     );
+
+const updateComponentsEpic = event$ =>
+  event$
+    .filter(x => x.type === UPDATE_COMPONENTS_INTENT)
+    .flatMap(({ payload: { serverId } }) =>
+      findServers({ _id: serverId })
+        .map(({ host, login, password }) => ({ host, login, password, serverId }))
+    )
+    .flatMap(({ host, login, password, serverId }) =>
+      componentsList({ host, login, password })
+        .map(({ time, data }) => {
+          const items = data.data;
+          return updateComponents({ serverId, items, time });
+        })
+    );
+
+const refreshComponentOnBundleActionFulfilled = event$ =>
+  event$
+    .filter(x => x.type === BUNDLE_ACTION_FULFILLED)
+    .groupBy(({ payload: { serverId } }) => serverId)
+    .flatMap(group =>
+      group
+        .throttleTime(2 * 1000)
+        .map(({ payload: { serverId} }) => updateComponentsIntent({ serverId }))
+    )
 
 const bundlesActions = event$ =>
   event$
@@ -55,7 +82,6 @@ const componentActions = event$ =>
       findServers({ _id: serverId })
         .map(({ host, login, password }) => ({ type, host, login, password, componentId, serverId }))
     )
-    .do(x => console.log(JSON.stringify(x)))
     .flatMap(({ type, host, login, password, componentId, serverId }) => {
       if (type === START_COMPONENT) {
         return startComponent({ host, login, password })(componentId)
@@ -64,7 +90,6 @@ const componentActions = event$ =>
       return stopComponent({ host, login, password })(componentId)
         .map(x => ({ ...x, serverId, type, componentId }));
     })
-    .do(x => console.log("!!" + x.data))
     .flatMap(({ type, serverId, componentId, data, time }) => {
       try{
         return Rx.Observable.of(updateComponents({ serverId, items: data ? data.data : [], time }),componentActionFulfilled({ type, serverId, componentId }))
@@ -77,5 +102,7 @@ const componentActions = event$ =>
 export default event$ => Rx.Observable.merge(
   bundlesActions(event$),
   updateBundlesEpic(event$),
-  componentActions(event$)
+  componentActions(event$),
+  updateComponentsEpic(event$),
+  refreshComponentOnBundleActionFulfilled(event$)
 );

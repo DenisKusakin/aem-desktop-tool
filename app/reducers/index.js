@@ -11,6 +11,7 @@ import removeServer from './remove-server-reducer'
 import search from './search-reducer';
 import bundles from './bundles-reducer';
 import components from './components-reducer';
+import bottomNavigation from './bottom-navigation-reducer';
 
 const rootReducer = combineReducers({
   router,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   bundlesSearch: search('bundles'),
   componentsSearch: search('components'),
   bundles,
-  components
+  components,
+  bottomNavigation
 });
 
 export default rootReducer;

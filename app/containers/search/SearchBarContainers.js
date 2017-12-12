@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { runSearch, changeQueryField } from '../../actions/index';
 import searchSelector from './../../selectors/search-selector';
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = reduxRoot => (state) => {
   let serverIds = [];
-  const search = searchSelector(state, ownProps.id);
+  const search = searchSelector(state, reduxRoot);
 
   Object.keys(search.checkboxes).forEach(x => {
     if (search.checkboxes[x]) {
@@ -19,10 +19,10 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = searchId => (dispatch) => ({
   onRequestSearch: (serverIds, q) => () => dispatch(
-    runSearch(ownProps.id, ownProps.searchType)({ serverIds, q })),
-  onChange: q => dispatch(changeQueryField(ownProps.id)(q))
+    runSearch(searchId, searchId)({ serverIds, q })),
+    onChange: q => dispatch(changeQueryField(searchId)(q))
 });
 
 const mergeProps = (stateProps, dispatchProps) => ({
@@ -31,6 +31,9 @@ const mergeProps = (stateProps, dispatchProps) => ({
   value: stateProps.value
 });
 
-const SearchBarContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(SearchBar);
+const searchBarContainer = (reduxRoot, searchId) => connect(mapStateToProps(reduxRoot), mapDispatchToProps(searchId), mergeProps)(SearchBar);
 
-export default SearchBarContainer;
+export default {
+  BundlesSearchBarContainer: searchBarContainer('bundlesSearch', 'bundles'),
+  ComponentsSearchBarContainer: searchBarContainer('componentsSearch', 'components')
+}
