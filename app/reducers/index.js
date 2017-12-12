@@ -21,7 +21,8 @@ const rootReducer = combineReducers({
   errors,
   newServerFormVisible,
   removeServerDialog: removeServer,
-  search,
+  bundlesSearch: search('bundles'),
+  componentsSearch: search('components'),
   bundles,
   components
 });

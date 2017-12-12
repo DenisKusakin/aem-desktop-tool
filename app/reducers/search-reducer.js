@@ -31,7 +31,17 @@ const INITIAL_STATE2 = {
   current: 0
 };
 
-const itemReducer = (state, action) => {
+const INITIAL_STATE = {
+  checkboxes: {},
+  result: {
+    chunks: []
+  },
+  q: '',
+  // id: 'components',
+  // label: 'Components'
+};
+
+const itemReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CHANGE_FILTER_CHECKBOX_STATE:
       return {
@@ -82,8 +92,18 @@ const itemReducer = (state, action) => {
   }
 };
 
+// export default itemReducer;
+const reducerv2 = id => (state = INITIAL_STATE, action) => {
+  if (action.payload && action.payload.searchId === id) {
+    return itemReducer(state, action);
+  }
+  return state;
+};
+
+export default reducerv2;
+
 const rootReducer = (state = INITIAL_STATE2, action) => {
-  if (action.type === CHANGE_BOTTOM_NAVIGATION){
+  if (action.type === CHANGE_BOTTOM_NAVIGATION) {
     return {
       ...state,
       current: action.payload.newIndex
@@ -108,4 +128,4 @@ const rootReducer = (state = INITIAL_STATE2, action) => {
   };
 };
 
-export default rootReducer;
+// export default rootReducer;
