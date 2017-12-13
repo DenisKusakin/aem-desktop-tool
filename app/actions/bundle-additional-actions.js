@@ -8,9 +8,13 @@ const bundleStartWatching = ({ serverId, bundleId }) => (
 const bundleStopWatching = ({ serverId, bundleId }) => (
   { type: BUNDLE_STOP_WATCHING, payload: { serverId, bundleId } })
 
+const bundleStopWatching = ({ serverId, bundleId }) => (
+  { type: BUNDLE_STOP_WATCHING, payload: { serverId, bundleId } })
+
 export default {
   BUNDLE_START_WATCHING,
   BUNDLE_STOP_WATCHING,
+  UPDATE_BUNDLES_WATCHING_INFO,
   bundleStartWatching,
   bundleStopWatching
 }
