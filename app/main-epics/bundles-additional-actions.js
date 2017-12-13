@@ -2,15 +2,18 @@ import Rx from 'rxjs/Rx';
 import { setMetaInf, getMetaInf } from './../db';
 import {
   BUNDLE_START_WATCHING,
-  BUNDLE_STOP_WATCHING
+  BUNDLE_STOP_WATCHING,
+  UPDATE_BUNDLES_WATCHING_INFO,
+  bundleUpdateWatchingInfo
 } from './../actions';
 
-const watchBundlesEpic = event$ =>
+const BUNDLES_WATCHING_META_KEY = 'bundlesWatched';
+
+const startWatchBundleEpic = event$ =>
   event$
-    .filter(x => x.type === UPDATE_BUNDLES_INTENT)
-    .flatMap(({ payload: { serverId } }) =>
-      findServers({ _id: serverId })
-        .map(({ host, login, password }) => ({ host, login, password, serverId }))
+    .filter(x => x.type === BUNDLE_START_WATCHING)
+    .flatMap(({ payload: { serverId, bundleId } }) =>
+      getMetaInf({ serverId, BUNDLES_WATCHING_META_KEY })
     )
     .flatMap(({ host, login, password, serverId }) =>
       bundlesList({ host, login, password })
