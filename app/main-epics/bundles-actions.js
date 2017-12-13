@@ -73,7 +73,11 @@ const bundlesActions = event$ =>
       return stopBundle({ host, login, password })(bundleId)
         .map(x => ({ serverId, type, bundleId }));
     })
-    .flatMap(({ type, serverId, bundleId }) => Rx.Observable.of(bundleActionFulfilled({ type, serverId, bundleId }), updateBundlesIntent({ serverId })));
+    .flatMap(({type, serverId, bundleId}) => Rx.Observable.of(bundleActionFulfilled({
+      type,
+      serverId,
+      bundleId
+    }), updateBundlesIntent({serverId})));
 
 const componentActions = event$ =>
   event$
@@ -91,11 +95,22 @@ const componentActions = event$ =>
         .map(x => ({ ...x, serverId, type, componentId }));
     })
     .flatMap(({ type, serverId, componentId, data, time }) => {
-      try{
-        return Rx.Observable.of(updateComponents({ serverId, items: data ? data.data : [], time }),componentActionFulfilled({ type, serverId, componentId }))
-      }catch(e){
-        console.log(e)
-        return Rx.Observable.of()
+      try {
+        if (type === START_COMPONENT) {
+          return Rx.Observable.of(updateComponents({
+            serverId,
+            items: data ? data.data : [],
+            time
+          }), componentActionFulfilled({ type, serverId, componentId }));
+        } else {
+          return Rx.Observable.of(updateComponentsIntent({ serverId }), componentActionFulfilled({
+            type,
+            serverId,
+            componentId
+          }));
+        }
+      } catch (e) {
+        return Rx.Observable.of();
       }
     });
 

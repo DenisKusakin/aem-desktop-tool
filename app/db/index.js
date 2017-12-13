@@ -1,5 +1,5 @@
-import serversDBApi from './servers.js'
+import serversDBApi from './servers';
 
-export {
-    ...serversDBApi
-}
+export default {
+  ...serversDBApi
+};

@@ -9,18 +9,21 @@ import {
 
 const BUNDLES_WATCHING_META_KEY = 'bundlesWatched';
 
-const startWatchBundleEpic = event$ =>
+const watchBundleEpic = event$ =>
   event$
-    .filter(x => x.type === BUNDLE_START_WATCHING)
-    .flatMap(({ payload: { serverId, bundleId } }) =>
+    .filter(x => x.type === BUNDLE_START_WATCHING || x.type === BUNDLE_STOP_WATCHING)
+    .flatMap(({ type, payload: { serverId, bundleId } }) =>
       getMetaInf({ serverId, BUNDLES_WATCHING_META_KEY })
+        .map(meta => ({ meta, serverId, bundleId, type }))
     )
-    .flatMap(({ host, login, password, serverId }) =>
-      bundlesList({ host, login, password })
-        .map(({ time, data }) => {
-          const items = data.data;
-          return updateBundles({ serverId, items, time });
-        })
+    .flatMap(({ type, meta, serverId, bundleId }) =>
+      setMetaInf({
+        serverId,
+        key: BUNDLES_WATCHING_META_KEY,
+        data: type === BUNDLE_START_WATCHING ? meta.filter(x => x !== bundleId).push(bundleId) : meta.filter(x => x !== bundleId)
+      })
     );
 
-export default
+export default event$ => Rx.Observable.merge(
+  watchBundleEpic(event$)
+);
