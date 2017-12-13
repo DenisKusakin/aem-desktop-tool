@@ -10,7 +10,8 @@ import ServerInfoDialog from '../containers/ServerInfoDialogContainer';
 import RemoveServerDialogContainer from '../containers/RemoveServerDialogContainer';
 import ServerInfo from '../containers/ServerInfoContainer';
 import Notifications from '../containers/Notifications';
-import SearchBar from './../containers/search/SearchContainer';
+//import SearchBar from './../containers/search/SearchContainer';
+import TabsNavigation from './../containers/TabsNavigationContainer';
 
 export default class Home extends Component {
 
@@ -26,7 +27,7 @@ export default class Home extends Component {
           <ServerList />
         </Drawer>
 
-        <SearchBar />
+        <TabsNavigation />
 
         <Notifications />
         <NewServerDialog />
