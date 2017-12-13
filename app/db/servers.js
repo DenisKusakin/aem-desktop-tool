@@ -53,8 +53,39 @@ function findServers(query){
     })
 }
 
+function setMetaInf({ serverId, key, data }){
+  return findServers({ _id: serverId })
+    .flatMap(({ _id, meta, ...restServerInfo }) => {
+      return Rx.Observable.create( observer => {
+          serversDB.update({ _id }, { ...restServerInfo, meta: { ...meta, [key]: data } }, {}, function (err, numRemoved) {
+              if(err){
+                  observer.error();
+                  return;
+              }
+              observer.next();
+              observer.complete();
+          });
+      })
+    })
+}
+
+function getMetaInf({ serverId, key }){
+  return Rx.Observable.create( observer => {
+    serversDB.findOne({ _id: serverId }, function(err, doc){
+        if(err){
+            observer.error()
+            return
+        }
+        observer.next(doc.meta ? doc.meta[key] : null)
+        observer.complete()
+    })
+  })
+}
+
 export default {
     persistServer,
     removeServer,
-    findServers
+    findServers,
+    setMetaInf,
+    getMetaInf
 }

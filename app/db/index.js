@@ -1,11 +1,5 @@
-import {
-    persistServer,
-    removeServer,
-    findServers
-} from './servers.js'
+import serversDBApi from './servers.js'
 
 export {
-    persistServer,
-    removeServer,
-    findServers
+    ...serversDBApi
 }
