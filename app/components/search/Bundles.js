@@ -4,8 +4,8 @@ import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import BundleActionButton from './../../containers/BundleActionButtonContainer';
 import VisibilityIcon from 'material-ui/svg-icons/action/visibility';
-import {red500, yellow500, blue500, green200} from 'material-ui/styles/colors';
-import BundleAdditionalActions from './../BundleAdditionalActions.js';
+import { red500, yellow500, blue500, green200 } from 'material-ui/styles/colors';
+import BundleAdditionalActions from './../../containers/BundleAdditionalActionsButtonContainer';
 
 // import SearchResult from "./search-result.js"
 // import BundleActionButton from "./../../containers/BundleActionButton.js"
@@ -33,7 +33,7 @@ const renderItem = serverId => ({ name, symbolicName, id, version, state, stateR
     <TableRowColumn style={{ width: '20%' }}>{state}</TableRowColumn>
     <TableRowColumn style={{ width: '15%' }}>
       <BundleActionButton stateRaw={stateRaw} serverId={serverId} bundleId={id} isActionPending={isActionPending} />
-      <BundleAdditionalActions />
+      <BundleAdditionalActions serverId={serverId} bundleId={id} />
     </TableRowColumn>
   </TableRow>
 );

@@ -1,5 +1,6 @@
 import all from './search-actions';
 import bundlesActions from './bundles-actions';
+import bundleAdditionalActions from './bundle-additional-actions';
 import componentActions from './components-actions';
 
 const HOME_PAGE_MOUNT = 'HOME_PAGE_MOUNT';
@@ -32,6 +33,7 @@ module.exports = {
   ...all,
   ...bundlesActions,
   ...componentActions,
+  ...bundleAdditionalActions,
   HIDE_DRAWER,
   SHOW_DRAWER,
   ADD_SERVER,

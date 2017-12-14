@@ -71,6 +71,7 @@ function setMetaInf({serverId, key, data}) {
 }
 
 function getMetaInf({serverId, key}) {
+  console.log(serverId)
   return Rx.Observable.create(observer => {
     serversDB.findOne({_id: serverId}, function (err, doc) {
       if (err) {

@@ -55,8 +55,8 @@ const refreshComponentOnBundleActionFulfilled = event$ =>
     .flatMap(group =>
       group
         .throttleTime(2 * 1000)
-        .map(({ payload: { serverId} }) => updateComponentsIntent({ serverId }))
-    )
+        .map(({ payload: { serverId } }) => updateComponentsIntent({ serverId }))
+    );
 
 const bundlesActions = event$ =>
   event$
