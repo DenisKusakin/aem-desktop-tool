@@ -11,7 +11,7 @@ const BundleAdditionalActions = ({ handleStartWathingClick, handleStopWatchingCl
     targetOrigin={{ horizontal: 'left', vertical: 'top' }}
   >
     <MenuItem primaryText="Start Watching" onClick={handleStartWathingClick} />
-    <MenuItem primaryText="Start Watching" onClick={handleStopWatchingClick} />
+    <MenuItem primaryText="Stop Watching" onClick={handleStopWatchingClick} />
   </IconMenu>
 );
 

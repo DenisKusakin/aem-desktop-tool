@@ -5,6 +5,7 @@ const UPDATE_BUNDLES_WATCHING_INFO = 'UPDATE_BUNDLES_WATCHING_INFO';
 const BUNDLE_STATE_CHANGED = 'BUNDLE_STATE_CHANGED';
 const BUNDLE_DEPLOYED = 'BUNDLE_DEPLOYED';
 const BUNDLE_REMOVED = 'BUNDLE_REMOVED';
+const SHOW_BUNDLE_DISABLED_NOTY = 'SHOW_BUNDLE_DISABLED_NOTY';
 
 const bundleStartWatching = ({ serverId, bundleId }) => (
   { type: BUNDLE_START_WATCHING, payload: { serverId, bundleId } });
@@ -24,6 +25,10 @@ const bundleDeployed = ({ serverId, bundleId }) => (
 const bundleRemoved = ({ serverId, bundleId }) => (
   { type: BUNDLE_REMOVED, payload: { serverId, bundleId } });
 
+const showBundleDisabledNoty = ({ serverId, bundleId }) => (
+  { type: SHOW_BUNDLE_DISABLED_NOTY, payload: { serverId, bundleId } }
+);
+
 export default {
   BUNDLE_START_WATCHING,
   BUNDLE_STOP_WATCHING,
@@ -31,10 +36,12 @@ export default {
   BUNDLE_STATE_CHANGED,
   BUNDLE_DEPLOYED,
   BUNDLE_REMOVED,
+  SHOW_BUNDLE_DISABLED_NOTY,
   bundleStateChanged,
   bundleDeployed,
   bundleRemoved,
   bundleStartWatching,
   bundleStopWatching,
   bundleUpdateWatchingInfo,
+  showBundleDisabledNoty
 };

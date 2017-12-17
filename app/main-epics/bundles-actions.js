@@ -31,6 +31,7 @@ const updateBundlesEpic = event$ =>
           const items = data.data;
           return updateBundles({ serverId, items, time });
         })
+        .catch(() => Rx.Observable.empty())
     );
 
 const updateComponentsEpic = event$ =>
@@ -73,11 +74,17 @@ const bundlesActions = event$ =>
       return stopBundle({ host, login, password })(bundleId)
         .map(x => ({ serverId, type, bundleId }));
     })
-    .flatMap(({type, serverId, bundleId}) => Rx.Observable.of(bundleActionFulfilled({
+    .flatMap(({ type, serverId, bundleId }) => Rx.Observable.of(bundleActionFulfilled({
       type,
       serverId,
       bundleId
-    }), updateBundlesIntent({serverId})));
+    }), updateBundlesIntent({ serverId })));
+
+const updateBundlesPeriodicly = () =>
+  Rx.Observable.interval(3 * 1000)
+    .flatMap(() => findServers({})
+      .map(({ id }) => updateBundlesIntent({ serverId: id }))
+    );
 
 const componentActions = event$ =>
   event$
@@ -102,13 +109,12 @@ const componentActions = event$ =>
             items: data ? data.data : [],
             time
           }), componentActionFulfilled({ type, serverId, componentId }));
-        } else {
-          return Rx.Observable.of(updateComponentsIntent({ serverId }), componentActionFulfilled({
-            type,
-            serverId,
-            componentId
-          }));
         }
+        return Rx.Observable.of(updateComponentsIntent({ serverId }), componentActionFulfilled({
+          type,
+          serverId,
+          componentId
+        }));
       } catch (e) {
         return Rx.Observable.of();
       }
@@ -119,5 +125,6 @@ export default event$ => Rx.Observable.merge(
   updateBundlesEpic(event$),
   componentActions(event$),
   updateComponentsEpic(event$),
-  refreshComponentOnBundleActionFulfilled(event$)
+  refreshComponentOnBundleActionFulfilled(event$),
+  updateBundlesPeriodicly(event$)
 );

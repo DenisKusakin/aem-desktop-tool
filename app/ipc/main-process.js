@@ -17,24 +17,18 @@ const on = (() => {
     subscribers.forEach(subscriber => subscriber(event, arg));
   });
   return subscriber => {
-    subscribers.push(subscriber)
-    console.log(`Subscribers amount: ${subscribers.length}`)
-  }
-})()
+    subscribers.push(subscriber);
+  };
+})();
 
 const getRendererEvents = () => Rx.Observable.create(subscriber => {
-  console.log("????")
-//  ipcMain.on(PUSH_TO_MAIN_PROCESS, (event, arg) => {
-//    subscriber.next(arg);
-//  });
   on((event, arg) => {
     subscriber.next(arg);
-  })
+  });
 });
 
 const pushToRendererLogger = getLogger('Push to renderer');
 const errorLogger = getLogger('Error: ', 'error.log');
-console.log("!!!!!!!")
 epic(getRendererEvents())
     .do(x => pushToRendererLogger.info(JSON.stringify(x, null, '\t')))
     .subscribe(pushToRenderer, error => {

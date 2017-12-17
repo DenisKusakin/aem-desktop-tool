@@ -2,27 +2,27 @@ import Rx from 'rxjs/Rx';
 
 const Datastore = require('nedb');
 
-const serversDB = new Datastore({filename: 'datafile-servers', autoload: true});
+const serversDB = new Datastore({ filename: 'datafile-servers', autoload: true });
 
-function persistServer({name, host, port, login, password}) {
+function persistServer({ name, host, port, login, password }) {
   return Rx.Observable.create(observer => {
-    serversDB.insert({name, host, login, password}, function (err, newDoc) {
+    serversDB.insert({ name, host, login, password }, (err, newDoc) => {
       if (err) {
-        observer.error()
-        return
+        observer.error();
+        return;
       }
       observer.next({
         name: newDoc.name,
         id: newDoc._id
-      })
-      observer.complete()
+      });
+      observer.complete();
     });
-  })
+  });
 }
 
 function removeServer(_id) {
   return Rx.Observable.create(observer => {
-    serversDB.remove({_id}, {}, function (err, numRemoved) {
+    serversDB.remove({ _id }, {}, (err, numRemoved) => {
       if (err) {
         observer.error();
         return;
@@ -30,58 +30,56 @@ function removeServer(_id) {
       observer.next();
       observer.complete();
     });
-  })
+  });
 }
 
 function findServers(query) {
   return Rx.Observable.create(observer => {
     serversDB.find(query, function (err, docs) {
       if (err) {
-        observer.error()
-        return
+        observer.error();
+        return;
       }
-      docs.forEach(function (element) {
+      docs.forEach((element) => {
         observer.next({
           name: element.name,
           id: element._id,
           host: element.host,
           login: element.login,
           password: element.password
-        })
-      }, this);
-      observer.complete()
-    })
-  })
-}
-
-function setMetaInf({serverId, key, data}) {
-  return findServers({_id: serverId})
-    .flatMap(({_id, meta, ...restServerInfo}) => {
-      return Rx.Observable.create(observer => {
-        serversDB.update({_id}, {...restServerInfo, meta: {...meta, [key]: data}}, {}, function (err, numRemoved) {
-          if (err) {
-            observer.error();
-            return;
-          }
-          observer.next();
-          observer.complete();
         });
-      })
-    })
+      }, this);
+      observer.complete();
+    });
+  });
 }
 
-function getMetaInf({serverId, key}) {
-  console.log(serverId)
+function setMetaInf({ serverId, key, data }) {
+  return findServers({ _id: serverId })
+    .flatMap(({ meta, ...restServerInfo }) => Rx.Observable.create(observer => {
+      serversDB.update({ _id: serverId }, { ...restServerInfo, meta: { ...meta, [key]: data } }, {}, (err, numRemoved) => {
+        if (err) {
+          observer.error();
+          return;
+        }
+        observer.next();
+        observer.complete();
+      });
+    }));
+}
+
+function getMetaInf({ serverId, key }) {
+  console.log(serverId);
   return Rx.Observable.create(observer => {
-    serversDB.findOne({_id: serverId}, function (err, doc) {
+    serversDB.findOne({ _id: serverId }, (err, doc) => {
       if (err) {
-        observer.error()
-        return
+        observer.error();
+        return;
       }
-      observer.next(doc.meta ? doc.meta[key] : null)
-      observer.complete()
-    })
-  })
+      observer.next(doc.meta ? doc.meta[key] : null);
+      observer.complete();
+    });
+  });
 }
 
 export default {
@@ -90,4 +88,4 @@ export default {
   findServers,
   setMetaInf,
   getMetaInf
-}
+};
