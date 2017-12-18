@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import { Tabs, Tab } from 'material-ui/Tabs';
 import BundlesSearch from './search/BundlesSearch';
 import ComponentsSearch from './search/ComponentsSearch';
 
@@ -8,13 +8,13 @@ const TabsNavigation = ({ value, handleClick }) => (
     value={value}
     onChange={handleClick}
   >
-    <Tab label='Bundles' value='bundles'>
+    <Tab label="Bundles" value="bundles">
       <BundlesSearch />
     </Tab>
-    <Tab label='Components' value='components'>
+    <Tab label="Components" value="components">
       <ComponentsSearch />
     </Tab>
   </Tabs>
-)
+);
 
 export default TabsNavigation;

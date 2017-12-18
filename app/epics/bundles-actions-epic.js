@@ -35,7 +35,8 @@ const showNotyOnBundleDisabled = (action$, store, { actions: { SHOW_BUNDLE_DISAB
     const server = store.getState().servers.items.find(x => x.id === serverId);
     const bundle = store.getState().bundles[serverId].items.find(x => x.id === bundleId);
     const noty = {
-      title: `Bundle ${bundle.name} is not active on ${server.name}`,
+      title: `${server.name}`,
+      message: `Bundle ${bundle.name} is not active`,
       autoDismiss: 0,
       position: 'br',
       uid: `bundleDisabled${serverId}-${bundleId}`

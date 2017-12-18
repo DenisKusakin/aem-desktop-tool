@@ -3,7 +3,8 @@ import {
   ADD_SEARCH_RESULT_CHUNK,
   RUN_SEARCH,
   QUERY_FIELD_CHANGE,
-  CHANGE_BOTTOM_NAVIGATION
+  CHANGE_BOTTOM_NAVIGATION,
+  CHANGE_FILTER_STATE
 } from './../actions/search-actions';
 import { REMOVE_SERVER_FULFILLED } from './../actions';
 
@@ -50,6 +51,13 @@ const itemReducer = (state = INITIAL_STATE, action) => {
           ...state.checkboxes,
           [action.payload.id]: !state.checkboxes[action.payload.id]
         }
+      };
+    case CHANGE_FILTER_STATE:
+      const checkboxes = {};
+      action.payload.selectedValues.forEach(x => checkboxes[x] = true);
+      return {
+        ...state,
+        checkboxes
       };
     case REMOVE_SERVER_FULFILLED:
       if (state.checkboxes[action.payload.id]) {

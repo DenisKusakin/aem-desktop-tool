@@ -1,7 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import styles from './Home.css';
 import AppBar from '../containers/AppBar';
 import Drawer from '../containers/Drawer';
 import ServerList from '../containers/ServerListContainer';
@@ -10,8 +8,8 @@ import ServerInfoDialog from '../containers/ServerInfoDialogContainer';
 import RemoveServerDialogContainer from '../containers/RemoveServerDialogContainer';
 import ServerInfo from '../containers/ServerInfoContainer';
 import Notifications from '../containers/Notifications';
-//import SearchBar from './../containers/search/SearchContainer';
 import TabsNavigation from './../containers/TabsNavigationContainer';
+import SearchDialog from './SearchDialog';
 
 export default class Home extends Component {
 
@@ -35,6 +33,7 @@ export default class Home extends Component {
           <ServerInfo />
         </ServerInfoDialog>
         <RemoveServerDialogContainer />
+        <SearchDialog />
       </div>
     );
   }

@@ -3,6 +3,7 @@ const ADD_SEARCH_RESULT_CHUNK = 'ADD_SEARCH_RESULT_CHUNK';
 const RUN_SEARCH = 'RUN_SEARCH';
 const QUERY_FIELD_CHANGE = 'QUERY_FIELD_CHANGE';
 const CHANGE_BOTTOM_NAVIGATION = 'CHANGE_BOTTOM_NAVIGATION';
+const CHANGE_FILTER_STATE = 'CHANGE_FILTER_STATE';
 
 const changeCheckboxState = searchId => id => (
   { type: CHANGE_FILTER_CHECKBOX_STATE, payload: { searchId, id } });
@@ -14,6 +15,9 @@ const changeQueryField = searchId => q => (
   { type: QUERY_FIELD_CHANGE, payload: { q, searchId } });
 const changeBottomNavigation = newIndex => (
   { type: CHANGE_BOTTOM_NAVIGATION, payload: { newIndex } });
+const changeFilterState = searchId => selectedValues => (
+  { type: CHANGE_FILTER_STATE, payload: { selectedValues, searchId } }
+);
 
 export default {
   CHANGE_FILTER_CHECKBOX_STATE,
@@ -25,5 +29,7 @@ export default {
   QUERY_FIELD_CHANGE,
   changeQueryField,
   CHANGE_BOTTOM_NAVIGATION,
-  changeBottomNavigation
+  changeBottomNavigation,
+  CHANGE_FILTER_STATE,
+  changeFilterState
 };

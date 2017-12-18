@@ -2,6 +2,7 @@ import all from './search-actions';
 import bundlesActions from './bundles-actions';
 import bundleAdditionalActions from './bundle-additional-actions';
 import componentActions from './components-actions';
+import searchDialogActions from './search-dialog-actions';
 
 const HOME_PAGE_MOUNT = 'HOME_PAGE_MOUNT';
 const HIDE_DRAWER = 'HIDE_DRAWER';
@@ -34,6 +35,7 @@ module.exports = {
   ...bundlesActions,
   ...componentActions,
   ...bundleAdditionalActions,
+  ...searchDialogActions,
   HIDE_DRAWER,
   SHOW_DRAWER,
   ADD_SERVER,
