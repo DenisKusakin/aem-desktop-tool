@@ -4,8 +4,10 @@ import { AppContainer } from 'react-hot-loader';
 import Root from './containers/Root';
 import { configureStore, history } from './store/configureStore';
 import './app.global.css';
+import bindHotkeys from './hotkeys';
 
 const store = configureStore();
+bindHotkeys(store.dispatch);
 
 render(
   <AppContainer>

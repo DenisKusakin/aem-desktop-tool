@@ -20,20 +20,7 @@ const map = {
   }
 };
 
-// map[FOUND] = {
-//     text: "Online",
-//     color: green500
-// };
-// map[NOT_FOUND] = {
-//     text: "Offline",
-//     color: red500
-// };
-// map[INVALID_CREDENTIALS] = {
-//     text: "Invalid credentials",
-//     color: indigo500
-// };
-
 export default {
-  statusText: statusCode => map[statusCode].text,
-  statusColor: statusCode => map[statusCode].color
+  statusText: statusCode => map[statusCode] ? map[statusCode].text : map[NOT_FOUND].text,
+  statusColor: statusCode => map[statusCode] ? map[statusCode].color : map[NOT_FOUND].color
 };

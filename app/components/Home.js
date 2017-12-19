@@ -9,7 +9,7 @@ import RemoveServerDialogContainer from '../containers/RemoveServerDialogContain
 import ServerInfo from '../containers/ServerInfoContainer';
 import Notifications from '../containers/Notifications';
 import TabsNavigation from './../containers/TabsNavigationContainer';
-import SearchDialog from './SearchDialog';
+import SearchDialog from './../containers/SearchDialogContainer';
 
 export default class Home extends Component {
 
